@@ -1,7 +1,10 @@
 init.VariableCatalog <- function (.Object, ...) {
     .Object <- callNextMethod(.Object, ...)
-    .Object@order <- do.call(VariableOrder,
-        GET(.Object@views$hierarchical_order)$groups)
+    order_url <- .Object@views$hierarchical_order
+    if (!is.null(order_url)) {
+        ## Joined variable catalogs don't have their own ordering
+        .Object@order <- do.call(VariableOrder, GET(order_url)$groups)
+    }
     return(.Object)
 }
 setMethod("initialize", "VariableCatalog", init.VariableCatalog)

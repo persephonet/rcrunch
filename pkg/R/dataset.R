@@ -9,7 +9,18 @@ init.CrunchDataset <- function (.Object, ...) {
 setMethod("initialize", "CrunchDataset", init.CrunchDataset)
 
 getDatasetVariables <- function (x) {
-    return(VariableCatalog(GET(x@urls$variables_url)))
+    vc <- GET(x@urls$variables_url)
+    join.catalog <- joins(x)
+    if (length(join.catalog)) {
+        vc <- JoinedVariableCatalog(vc)
+        join.var.catalogs <- vapply(index(join.catalog),
+            function (a) a$variables, character(1), USE.NAMES=FALSE)
+        vc@joins <- lapply(join.var.catalogs,
+            function (a) VariableCatalog(GET(a)))
+    } else {
+        vc <- VariableCatalog(vc)
+    }
+    return(vc)
 }
 
 getNrow <- function (dataset, filtered=TRUE) {

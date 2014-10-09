@@ -112,6 +112,9 @@ VariableGroup <- setClass("VariableGroup", representation=representation(
 ##' @rdname VariableCatalog
 VariableCatalog <- setClass("VariableCatalog", contains="ShojiCatalog",
     representation(order="VariableOrder"))
+JoinedVariableCatalog <- setClass("JoinedVariableCatalog",
+    contains="VariableCatalog", 
+    representation(joins="list"))
 DatasetCatalog <- setClass("DatasetCatalog", contains="ShojiCatalog")
 BatchCatalog <- setClass("BatchCatalog", contains="ShojiCatalog")
 

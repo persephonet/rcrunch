@@ -1,5 +1,6 @@
 context("Joining datasets")
 
+# options(crunch.debug=TRUE)
 join1 <- data.frame(keyvar=c(2, 4, 5, 3), v1=factor(letters[c(2,4)]))
 join2 <- data.frame(keyvar=10:1, v2=factor(LETTERS[1:5]))
 
@@ -34,12 +35,13 @@ if (run.integration.tests) {
                 test_that("The join succeeded", {
                     expect_true(is.dataset(joined))
                     expect_identical(length(joins(joined)), 1L)
-                    skip({
+                    # skip({
                         expect_identical(dim(joined), c(4L, 3L))
                         expect_identical(names(joined), c("keyvar", "v1", "v2"))
+                        print(as.vector(joined$v2))
                         expect_identical(as.vector(joined$v2),
                             factor(c("D", "B", "A", "C")))
-                    }, "TODO: fetch joined variable catalogs")
+                    # }, "TODO: fetch joined variable catalogs")
                 })
             })
         })
