@@ -88,14 +88,6 @@ with_mock_HTTP({
         expect_true(is.data.frame(as.data.frame(test.ds, force=TRUE)))
     })
 
-    test_that("as.data.frame size limit", {
-        with(temp.option(crunch.data.frame.limit=50), {
-            expect_error(as.data.frame(test.ds, force=TRUE),
-                "Dataset too large to coerce")
-            expect_true(is.data.frame(as.data.frame(test.ds[,1:2], force=TRUE)))
-        })
-    })
-
     test.df <- as.data.frame(test.ds)
 
     test_that("model.frame thus works on CrunchDataset", {
